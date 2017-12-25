@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#19000000</color>
+    <color name="color_000000">#000000</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="translate">#00ffffff</color>
+    <color name="loginsplitline">#cccccc</color>
+    <color name="login_text">#3D3D3D</color>
+    <color name="login_red">#ff6666</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="startastime">#5A5959</color>
+    <color name="gray_DAE2E5">#DAE2E5</color>
+    <color name="gray_B7C8CF">#B7C8CF</color>
+    <color name="gray_8D8D8D">#8D8D8D</color>
+    <color name="text_color">#333333</color>
+    <color name="color_1E8EFE">#1E8EFE</color>
+    <color name="gray_8D999E">#8D999E</color>
+    <color name="viewfinder_frame">#90FFFFFF</color>
+    <color name="result_point_color">#C0FFFF00</color>
+    <color name="laser_color">#0F0</color>
+    <color name="corner_color">#00FF00</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="result_view">#B0000000</color>
+    <color name="white_alipa">#BFffffff</color>
+    <color name="noticelayoutcolor">#BF000000</color>
+    <color name="neardevice_count">#3399ff</color>
+    <color name="color_252525">#252525</color>
+    <color name="color_808080">#808080</color>
+    <color name="color_525252">#525252</color>
+    <color name="split_line">#11112233</color>
+    <color name="color_ff5262">#ff5262</color>
+    <color name="text1">#59B29C</color>
+    <color name="color_c2c2c2">#c2c2c2</color>
+    <color name="color_c8c7c7">#c8c7c7</color>
+    <color name="navpage">#FFE1E8EB</color>
+    <color name="color_fafafa">#fafafa</color>
+    <color name="color_58dc88">#58dc88</color>
+    <color name="color_434343">#434343</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_1f8ffe">#1f8ffe</color>
+    <color name="color_661f8ffe">#661f8ffe</color>
+    <color name="color_66ffffff">#66ffffff</color>
 </resources>

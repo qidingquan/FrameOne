@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_1E8EFE">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/view_waiting"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:layout_centerInParent="true"
+            android:enabled="false" />
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:scaleType="fitXY"
+            android:src="@mipmap/startlogo" />
+        <TextView
+            android:id="@+id/tv_turn_to"
+            android:layout_width="80dp"
+            android:layout_height="45dp"
+            android:visibility="gone"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="40dp"
+            android:layout_above="@+id/iv_logo"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/bg_start_to"
+            android:text="跳过(3s)"
+            android:gravity="center"
+            android:textColor="@color/startastime"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+</FrameLayout>

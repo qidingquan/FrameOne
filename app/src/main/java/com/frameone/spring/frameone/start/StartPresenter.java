@@ -3,25 +3,24 @@ package com.frameone.spring.frameone.start;
 import android.util.Log;
 
 import com.frameone.spring.frameone.base.BasePresenter;
-import com.frameone.spring.frameone.data.manager.StartManager;
+import com.frameone.spring.frameone.data.entity.HttpResponseEntity;
+import com.frameone.spring.frameone.data.repository.StartRepository;
 
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2017/12/25.
  * 启动业务逻辑处理
  */
 
-public class StartPresenter implements BasePresenter {
+public class StartPresenter implements StartContract.Presenter {
 
-    private StartManager startManager;
-    private StartView startView;
+    private StartRepository startManager;
+    private StartContract.View startView;
 
-    public StartPresenter(StartView startView) {
+    public StartPresenter(StartContract.View startView) {
         this.startView = startView;
-        startManager = StartManager.getInstance();
+        startManager = StartRepository.getInstance();
     }
 
     @Override
@@ -29,9 +28,10 @@ public class StartPresenter implements BasePresenter {
 
     }
 
+    @Override
     public void getAds(String location_id, String dev_type) {
-        startManager.getAds(location_id, dev_type)
-                .subscribe(new Subscriber<Object>() {
+       /* startManager.getAds(location_id, dev_type)
+                .subscribe(new Subscriber<HttpResponseEntity<String>>() {
                     @Override
                     public void onCompleted() {
 
@@ -43,9 +43,9 @@ public class StartPresenter implements BasePresenter {
                     }
 
                     @Override
-                    public void onNext(Object o) {
-                        Log.e("data", o.toString());
+                    public void onNext(HttpResponseEntity<String> stringHttpResponseEntity) {
+//                        Log.e("data", o.toString());
                     }
-                });
+                });*/
     }
 }

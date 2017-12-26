@@ -10,14 +10,13 @@ import com.frameone.spring.frameone.R;
 import com.frameone.spring.frameone.base.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2017/12/25.
  * 启动页面
  */
 
-public class StartActivity extends BaseActivity implements StartView {
+public class StartActivity extends BaseActivity implements StartContract.View {
 
     @BindView(R.id.view_waiting)
     LottieAnimationView viewWaiting;
@@ -26,14 +25,23 @@ public class StartActivity extends BaseActivity implements StartView {
     @BindView(R.id.tv_turn_to)
     TextView tvTurnTo;
 
-    StartPresenter presenter;
+    StartContract.Presenter presenter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setContentView(R.layout.activity_start);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_start);
         presenter=new StartPresenter(this);
         presenter.getAds("1","4");
     }
 
 
+    @Override
+    public void setPresenter(StartContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void showAds() {
+
+    }
 }

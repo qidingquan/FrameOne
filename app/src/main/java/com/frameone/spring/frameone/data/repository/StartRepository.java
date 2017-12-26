@@ -1,5 +1,6 @@
-package com.frameone.spring.frameone.data.manager;
+package com.frameone.spring.frameone.data.repository;
 
+import com.frameone.spring.frameone.data.DataRepository;
 import com.frameone.spring.frameone.data.RetrofitFactory;
 import com.frameone.spring.frameone.data.service.StartService;
 
@@ -11,27 +12,27 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2017/12/25.
  * 启动页面数据操作
  */
-public class StartManager {
+public class StartRepository extends DataRepository{
 
-    private static StartManager instance;
+    private static StartRepository instance;
     private StartService startService;
 
-    public static StartManager getInstance() {
+    public static StartRepository getInstance() {
         if (instance == null) {
-            synchronized (StartManager.class) {
+            synchronized (StartRepository.class) {
                 if (instance == null) {
-                    instance = new StartManager();
+                    instance = new StartRepository();
                 }
             }
         }
         return instance;
     }
 
-    private StartManager() {
+    private StartRepository() {
         startService = RetrofitFactory.getInstance().getService(StartService.class);
     }
 
-    public Observable<Object> getAds(String location_id, String dev_type) {
+    public Observable<String> getAds(String location_id, String dev_type) {
         return startService.getAds(location_id, dev_type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

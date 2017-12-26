@@ -19,14 +19,20 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
         unBinder = ButterKnife.bind(this);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (unBinder != null) {
             unBinder.unbind();
         }
+        super.onDestroy();
     }
 }

@@ -8,16 +8,87 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // 默认是umeng的渠道
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
     }
-    buildTypes {
+    //签名
+   /* signingConfigs {
+        debug {
+            storeFile file(KEYSTORE_PATH)
+            storePassword KEYSTORE_PASSWORD
+            keyAlias "yanyu"
+            keyPassword KEY_PASSWORD
+        }
         release {
-            minifyEnabled true
+            storeFile file(KEYSTORE_PATH)
+            storePassword KEYSTORE_PASSWORD
+            keyAlias "yanyu"
+            keyPassword KEY_PASSWORD
+            v2SigningEnabled false
+        }
+    }*/
+    buildTypes {
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+//            signingConfig signingConfigs.debug
+        }
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            //启用混淆代码的功能
+            minifyEnabled false
+            //压缩对齐生成的apk包
+            zipAlignEnabled false
+            //移除无用的资源文件
+            shrinkResources false
+            //启用multidex的支持
+            multiDexEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-}
 
+    }
+    productFlavors {
+        kuan {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "kuan"]
+        }
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
+        qh360 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "qh360"]
+        }
+        baidu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+        }
+        wandoujia {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "小袋快借${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+        }
+    }
+//    applicationVariants.all { variant ->
+//        variant.outputs.each { output ->
+//            def outputFile = output.outputFile
+//            if (variant.buildType.name.equals('release')) {
+//                //生成apk名字的格式：Channel1.0.0_2016-06-22_baidu.apk
+//                //可自定义自己想要生成的格式
+//                def fileName = "Channel${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+//                output.outputFile = new File(outputFile.parent, fileName)
+//            }
+//        }
+//    }
+}
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'

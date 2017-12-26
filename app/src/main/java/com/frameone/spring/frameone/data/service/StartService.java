@@ -17,7 +17,7 @@ public interface StartService {
      * @return
      */
     @GET("Ads/main")
-    Observable<Object> getAds(
+    Observable<String> getAds(
             @Query("location_id") String location_id,
             @Query("dev_type") String dev_type);
 }

@@ -1,0 +1,7 @@
+获取Debug模式下的SHA1和MD5：
+keytool -list -v -keystore C:\Users\Administrator\.android\debug.keystore -alias androiddebugkey -storepass android -keypass android
+获取打包后的SHA1
+通过Android Studio编译器获取SHA1
+第一步、打开Android Studio的Terminal工具<br/>
+第二步、输入命令：keytool -v -list -keystore keystore文件路径<br/>
+第三步、输入Keystore密码

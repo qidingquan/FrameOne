@@ -12,7 +12,7 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2017/12/25.
  * 启动页面数据操作
  */
-public class StartRepository extends DataRepository{
+public class StartRepository extends DataRepository {
 
     private static StartRepository instance;
     private StartService startService;
@@ -32,9 +32,7 @@ public class StartRepository extends DataRepository{
         startService = RetrofitFactory.getInstance().getService(StartService.class);
     }
 
-    public Observable<String> getAds(String location_id, String dev_type) {
-        return startService.getAds(location_id, dev_type)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+    public Observable<Object> getAds(String location_id, String dev_type) {
+        return transform(startService.getAds(location_id, dev_type));
     }
 }

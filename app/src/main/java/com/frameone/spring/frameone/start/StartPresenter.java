@@ -5,6 +5,7 @@ import android.util.Log;
 import com.frameone.spring.frameone.base.BasePresenter;
 import com.frameone.spring.frameone.data.entity.HttpResponseEntity;
 import com.frameone.spring.frameone.data.repository.StartRepository;
+import com.frameone.spring.frameone.util.ToastUtil;
 
 import rx.Subscriber;
 
@@ -30,8 +31,8 @@ public class StartPresenter implements StartContract.Presenter {
 
     @Override
     public void getAds(String location_id, String dev_type) {
-       /* startManager.getAds(location_id, dev_type)
-                .subscribe(new Subscriber<HttpResponseEntity<String>>() {
+        startManager.getAds(location_id, dev_type)
+                .subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
 
@@ -43,9 +44,9 @@ public class StartPresenter implements StartContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(HttpResponseEntity<String> stringHttpResponseEntity) {
-//                        Log.e("data", o.toString());
+                    public void onNext(Object s) {
+                        ToastUtil.show(s.toString());
                     }
-                });*/
+                });
     }
 }

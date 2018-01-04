@@ -71,32 +71,31 @@ android {
     }
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "小袋快借${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+            outputFileName = "测试${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
         }
     }
-//    applicationVariants.all { variant ->
-//        variant.outputs.each { output ->
-//            def outputFile = output.outputFile
-//            if (variant.buildType.name.equals('release')) {
-//                //生成apk名字的格式：Channel1.0.0_2016-06-22_baidu.apk
-//                //可自定义自己想要生成的格式
-//                def fileName = "Channel${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
-//                output.outputFile = new File(outputFile.parent, fileName)
-//            }
-//        }
-//    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
+    //view初始化
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     //网络
@@ -106,4 +105,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.0'
     //动画
     compile 'com.airbnb.android:lottie:2.0.0-beta4'
+    //组件之间通信
+    compile 'org.greenrobot:eventbus:3.1.1'
+    //权限判断
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
 }

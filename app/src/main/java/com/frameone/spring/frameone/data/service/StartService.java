@@ -1,5 +1,7 @@
 package com.frameone.spring.frameone.data.service;
 
+import com.frameone.spring.frameone.data.entity.HttpResponseEntity;
+
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -17,7 +19,7 @@ public interface StartService {
      * @return
      */
     @GET("Ads/main")
-    Observable<String> getAds(
+    Observable<HttpResponseEntity<Object>> getAds(
             @Query("location_id") String location_id,
             @Query("dev_type") String dev_type);
 }

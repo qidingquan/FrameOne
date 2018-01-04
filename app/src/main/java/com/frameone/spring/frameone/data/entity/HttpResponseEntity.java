@@ -9,15 +9,15 @@ import java.io.Serializable;
 
 public class HttpResponseEntity<T> implements Serializable {
 
-    private int status;
+    private String status;
     private String info;
     private T data;
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

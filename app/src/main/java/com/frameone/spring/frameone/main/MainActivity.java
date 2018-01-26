@@ -30,7 +30,7 @@ import butterknife.BindView;
 /**
  * 主页
  */
-public class MainActivity extends BaseActivity implements AMapLocationListener {
+public class MainActivity extends BaseActivity implements AMapLocationListener,MainContract.View {
 
 
     @BindView(R.id.map_view)
@@ -42,34 +42,28 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     //声明AMapLocationClientOption对象
     private AMapLocationClientOption mLocationOption = null;
     private Marker screenMarker = null;//屏幕中间的位置
-    private ArrayList<MarkerOptions> markerOptionsList=new ArrayList<>();
-
+    private ArrayList<MarkerOptions> markerOptionsList = new ArrayList<>();
+    MainContract.Presenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mMapView.onCreate(savedInstanceState);
+        initMap();
+        presenter=new MainPresenter();
+        presenter.leaseStatus();
+        presenter.historyTrack();
+    }
+
+    private void initMap() {
         //初始化地图控制器对象
         if (aMap == null) {
             aMap = mMapView.getMap();
-            setUpMap();
         }
-        initLoc();
-    }
-
-    /**
-     * 设置一些amap的属性
-     */
-    private void setUpMap() {
-        aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
-        aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-        setupLocationStyle();
-        aMap.setOnMapLoadedListener(new AMap.OnMapLoadedListener() {
-            @Override
-            public void onMapLoaded() {
-                addMarkerInScreenCenter();
-            }
-        });
+        MapUtil.setUpMap(aMap);
+        MapUtil.setupLocationStyle(aMap);
+        //地图加载完成后在屏幕中央添加标识
+        aMap.setOnMapLoadedListener(() -> MapUtil.addMarkerInScreenCenter(aMap, R.drawable.purple_pin));
         // 设置可视范围变化时的回调的接口方法
         aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
             @Override
@@ -87,61 +81,11 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 aMap.addMarkers(markerOptionsList,true);*/
             }
         });
-    }
-
-    /**
-     * 设置自定义定位蓝点
-     */
-    private void setupLocationStyle() {
-        // 自定义系统定位蓝点
-        MyLocationStyle myLocationStyle = new MyLocationStyle();
-        // 自定义定位蓝点图标
-        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.
-                fromResource(R.mipmap.gps_point));
-        // 自定义精度范围的圆形边框颜色
-        myLocationStyle.strokeColor(Color.BLUE);
-        //自定义精度范围的圆形边框宽度
-        myLocationStyle.strokeWidth(1);
-        // 设置圆形的填充颜色
-        myLocationStyle.radiusFillColor(Color.parseColor("#33ff0000"));
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-        // 将自定义的 myLocationStyle 对象添加到地图上
-        aMap.setMyLocationStyle(myLocationStyle);
-    }
-
-    private void initLoc() {
         //初始化定位
-        mLocationClient = new AMapLocationClient(getApplicationContext());
+        mLocationClient = new AMapLocationClient(this);
+        MapUtil.initLocation(this, mLocationClient);
         //设置定位回调监听
         mLocationClient.setLocationListener(this);
-        //初始化AMapLocationClientOption对象
-        mLocationOption = new AMapLocationClientOption();
-        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        //设置只定位一次
-        mLocationOption.setOnceLocation(true);
-        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
-//        mLocationOption.setInterval(1000);
-        //设置是否返回地址信息（默认返回地址信息）
-//        mLocationOption.setNeedAddress(true);
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
-        mLocationClient.startLocation();
-
-    }
-
-    /**
-     * 在屏幕中心添加一个Marker
-     */
-    private void addMarkerInScreenCenter() {
-        LatLng latLng = aMap.getCameraPosition().target;
-        Point screenPosition = aMap.getProjection().toScreenLocation(latLng);
-        screenMarker = aMap.addMarker(new MarkerOptions()
-                .anchor(0.5f, 0.5f)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.purple_pin)));
-        //设置Marker在屏幕上,不跟随地图移动
-        screenMarker.setPositionByPixels(screenPosition.x, screenPosition.y);
     }
 
     @Override
@@ -191,5 +135,10 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                         + aMapLocation.getErrorInfo());
             }
         }
+    }
+
+    @Override
+    public void setPresenter(MainContract.Presenter presenter) {
+
     }
 }

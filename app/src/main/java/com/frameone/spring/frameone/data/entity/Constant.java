@@ -11,7 +11,9 @@ public class Constant {
 //	public static final String BASE_URL_WEB = "http://app.nuonuoanquan.com";
 //	public static final String BASE_URL = "http://app.nuonuoanquan.com/";
     //正环境
-    public static final String BASE_URL_WEB = "https://nnweixin.wonaonao.com";
-    public static final String BASE_URL = "https://nnweixin.wonaonao.com/";
+//    public static final String BASE_URL_WEB = "https://nnweixin.wonaonao.com";
+//    public static final String BASE_URL = "https://nnweixin.wonaonao.com/";
+    public static final String BASE_URL_WEB = "http://tnnweixin.wonaonao.com";
+    public static final String BASE_URL = "http://tnnweixin.wonaonao.com/";
 
 }

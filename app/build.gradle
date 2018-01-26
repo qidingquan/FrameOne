@@ -14,7 +14,7 @@ android {
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
     }
     //签名
-   /* signingConfigs {
+    /* signingConfigs {
         debug {
             storeFile file(KEYSTORE_PATH)
             storePassword KEYSTORE_PASSWORD
@@ -84,6 +84,7 @@ android {
         }
     }
 }
+
 def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
@@ -109,4 +110,12 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.1.1'
     //权限判断
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
+    implementation 'com.android.support:design:26.1.0'
+    //图片加载
+    implementation 'com.github.bumptech.glide:glide:4.5.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
+    //内存检测
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }

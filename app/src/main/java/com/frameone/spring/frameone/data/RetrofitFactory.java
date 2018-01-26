@@ -21,7 +21,10 @@ public class RetrofitFactory {
 
     private RetrofitFactory() {
 
-        okHttpClient = new OkHttpClient();
+        okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new BaseInterceptor())
+                .build();
+
         converterFactory = GsonConverterFactory.create(new GsonBuilder().create());
 
         retrofit = new Retrofit.Builder()
@@ -44,7 +47,7 @@ public class RetrofitFactory {
         return instance;
     }
 
-    public  <T> T getService(Class<T> tClass) {
+    public <T> T getService(Class<T> tClass) {
         return retrofit.create(tClass);
     }
 }

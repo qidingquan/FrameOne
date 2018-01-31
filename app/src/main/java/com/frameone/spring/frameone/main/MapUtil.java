@@ -1,8 +1,12 @@
 package com.frameone.spring.frameone.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -95,5 +99,50 @@ public class MapUtil {
         options.position(latLng);
         options.icon(BitmapDescriptorFactory.fromResource(markerRes));
         return options;
+    }
+    /**
+     * 调用百度地图导航
+     *
+     * @param context    上下文
+     * @param coord_type coord_type 可选 坐标类型，可选参数，默认为bd09经纬度坐标
+     * @param src        必选 调用来源，规则：companyName|appName。
+     * @param location   经纬度 例如：39.9761,116.3282
+     */
+    private void baiduNavi(Context context, String coord_type, @NonNull String src, @NonNull String location) {
+        StringBuffer stringBuffer = new StringBuffer("baidumap://map/navi?");
+        if (!TextUtils.isEmpty(coord_type)) {
+            stringBuffer.append("coord_type=").append(coord_type);
+        }
+        stringBuffer.append("&src=").append(src);
+        stringBuffer.append("&location=").append(location);
+        Intent intent = new Intent();
+        intent.setData(Uri.parse(stringBuffer.toString()));
+        context.startActivity(intent);
+    }
+
+    /**
+     * 启动高德App进行导航
+     *
+     * @param sourceApplication 必填 第三方调用应用名称。如 amap
+     * @param poiname           非必填 POI 名称
+     * @param lat               必填 纬度
+     * @param lon               必填 经度
+     * @param dev               必填 是否偏移(0:lat 和 lon 是已经加密后的,不需要国测加密; 1:需要国测加密)
+     * @param style             必填 导航方式(0 速度快; 1 费用少; 2 路程短; 3 不走高速；4 躲避拥堵；5 不走高速且避免收费；6 不走高速且躲避拥堵；7 躲避收费和拥堵；8 不走高速躲避收费和拥堵))
+     */
+    public static void gaodeNavi(Context context, String sourceApplication, String poiname, String lat, String lon, String dev, String style) {
+        StringBuffer stringBuffer = new StringBuffer("androidamap://navi?sourceApplication=")
+                .append(sourceApplication);
+        if (!TextUtils.isEmpty(poiname)) {
+            stringBuffer.append("&poiname=").append(poiname);
+        }
+        stringBuffer.append("&lat=").append(lat)
+                .append("&lon=").append(lon)
+                .append("&dev=").append(dev)
+                .append("&style=").append(style);
+
+        Intent intent = new Intent("android.intent.action.VIEW", android.net.Uri.parse(stringBuffer.toString()));
+        intent.setPackage("com.autonavi.minimap");
+        context.startActivity(intent);
     }
 }

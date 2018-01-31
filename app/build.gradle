@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.frameone.spring.frameone"
         minSdkVersion 15
@@ -9,26 +10,29 @@ android {
         versionCode 1
         versionName "1.0"
         flavorDimensions "versionCode"
+        //启用multidex的支持
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // 默认是umeng的渠道
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
     }
     //签名
-    /* signingConfigs {
+     signingConfigs {
         debug {
-            storeFile file(KEYSTORE_PATH)
-            storePassword KEYSTORE_PASSWORD
-            keyAlias "yanyu"
-            keyPassword KEY_PASSWORD
+            v2SigningEnabled false
+            keyAlias 'nuo'
+            keyPassword 'nuonuo'
+            storeFile file('D:/key/nuon.keystore')
+            storePassword 'nuonuo'
         }
         release {
-            storeFile file(KEYSTORE_PATH)
-            storePassword KEYSTORE_PASSWORD
-            keyAlias "yanyu"
-            keyPassword KEY_PASSWORD
             v2SigningEnabled false
+            keyAlias 'nuo'
+            keyPassword 'nuonuo'
+            storeFile file('D:/key/nuon.keystore')
+            storePassword 'nuonuo'
         }
-    }*/
+    }
     buildTypes {
         debug {
             // 显示Log
@@ -36,19 +40,18 @@ android {
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources false
-//            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
         }
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             //启用混淆代码的功能
-            minifyEnabled false
+            minifyEnabled true
             //压缩对齐生成的apk包
-            zipAlignEnabled false
+            zipAlignEnabled true
             //移除无用的资源文件
-            shrinkResources false
-            //启用multidex的支持
-            multiDexEnabled false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
 
     }
